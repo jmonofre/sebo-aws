@@ -86,50 +86,9 @@ Essas medidas controlam bem os dados compartilhados dentro do DynamoDB. As opera
 
 ## 5. Diagrama UML de sequência
 
-```mermaid
-sequenceDiagram
-    actor Cliente
-    participant FE as Frontend
-    participant API as API Gateway
-    participant CL as consultarLivros
-    participant RI as registrarInteresse
-    participant DB as DynamoDB
-    actor Colaborador
-    participant GE as gerenciarEstoque
-    participant ST as DynamoDB Stream
-    participant NC as notificarChegada
-    participant SNS as Amazon SNS
-
-    Cliente->>FE: Consulta livro indisponível
-    FE->>API: GET /livros/{livroId}
-    API->>CL: consultarLivros
-    CL->>DB: Obtém livro
-    DB-->>CL: quantidade = 0
-    CL-->>FE: livro indisponível
-
-    Cliente->>FE: Informa nome e e-mail
-    FE->>API: POST /interesses
-    API->>RI: registrarInteresse
-    RI->>DB: Grava AGUARDANDO
-    RI-->>FE: interesse registrado
-
-    Colaborador->>FE: Registra chegada
-    FE->>API: PUT /livros/{livroId}/estoque
-    API->>GE: gerenciarEstoque
-    GE->>DB: Incrementa quantidade
-    DB-->>GE: estoque atualizado
-    GE-->>FE: chegada registrada
-
-    DB-->>ST: imagem antiga e nova
-    ST-->>NC: MODIFIÇÃO com aumento
-    NC->>DB: Busca interesses AGUARDANDO
-    NC->>DB: Transação: diminui estoque e reserva o primeiro
-    DB-->>NC: reserva confirmada
-    NC->>SNS: Publica com atributo email
-    SNS-->>NC: SNS aceitou a publicação
-    NC->>DB: Marca notificação como ENVIADA
-    Note over SNS,Cliente: A entrega ao e-mail é posterior e pode falhar
-```
+<p align="center">
+  <img src="sequencia.svg" alt="Diagrama UML de sequência">
+</p>
 
 ## 6. Resultados e limitações
 

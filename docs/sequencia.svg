@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="760" viewBox="0 0 960 760" preserveAspectRatio="xMidYMid meet">
+  <rect width="960" height="760" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#455a64"/>
+    </marker>
+  </defs>
+  <style>
+    .head { fill:#f7fbff; stroke:#455a64; stroke-width:2; }
+    .title { font:700 20px Arial,sans-serif; fill:#263238; }
+    .label { font:700 12px Arial,sans-serif; fill:#263238; }
+    .small { font:11px Arial,sans-serif; fill:#37474f; }
+    .lifeline { stroke:#90a4ae; stroke-width:1.5; stroke-dasharray:6 5; }
+    .arrow { stroke:#455a64; stroke-width:2; fill:none; marker-end:url(#arrow); }
+    .reply { stroke:#455a64; stroke-width:2; fill:none; stroke-dasharray:5 4; marker-end:url(#arrow); }
+  </style>
+
+  <text x="480" y="30" text-anchor="middle" class="title">Diagrama UML de sequência</text>
+
+  <g>
+    <rect x="20" y="48" width="82" height="46" rx="6" class="head"/>
+    <rect x="120" y="48" width="82" height="46" rx="6" class="head"/>
+    <rect x="220" y="48" width="98" height="46" rx="6" class="head"/>
+    <rect x="336" y="48" width="108" height="46" rx="6" class="head"/>
+    <rect x="462" y="48" width="108" height="46" rx="6" class="head"/>
+    <rect x="588" y="48" width="100" height="46" rx="6" class="head"/>
+    <rect x="706" y="48" width="108" height="46" rx="6" class="head"/>
+    <rect x="832" y="48" width="108" height="46" rx="6" class="head"/>
+
+    <text x="61" y="67" text-anchor="middle" class="label">Cliente</text>
+    <text x="161" y="67" text-anchor="middle" class="label">Frontend</text>
+    <text x="269" y="67" text-anchor="middle" class="label">API Gateway</text>
+    <text x="390" y="67" text-anchor="middle" class="label">Lambdas</text>
+    <text x="516" y="67" text-anchor="middle" class="label">DynamoDB</text>
+    <text x="638" y="67" text-anchor="middle" class="label">Colaborador</text>
+    <text x="760" y="67" text-anchor="middle" class="label">DynamoDB</text>
+    <text x="886" y="67" text-anchor="middle" class="label">Amazon SNS</text>
+    <text x="390" y="83" text-anchor="middle" class="small">API / Fila</text>
+    <text x="760" y="83" text-anchor="middle" class="small">Stream</text>
+  </g>
+
+  <g>
+    <line x1="61" y1="94" x2="61" y2="720" class="lifeline"/>
+    <line x1="161" y1="94" x2="161" y2="720" class="lifeline"/>
+    <line x1="269" y1="94" x2="269" y2="720" class="lifeline"/>
+    <line x1="390" y1="94" x2="390" y2="720" class="lifeline"/>
+    <line x1="516" y1="94" x2="516" y2="720" class="lifeline"/>
+    <line x1="638" y1="94" x2="638" y2="720" class="lifeline"/>
+    <line x1="760" y1="94" x2="760" y2="720" class="lifeline"/>
+    <line x1="886" y1="94" x2="886" y2="720" class="lifeline"/>
+  </g>
+
+  <path d="M61 130 L161 130" class="arrow"/>
+  <text x="111" y="119" text-anchor="middle" class="small">Consulta livro indisponível</text>
+  <path d="M161 160 L269 160" class="arrow"/>
+  <text x="215" y="149" text-anchor="middle" class="small">GET /livros/{id}</text>
+  <path d="M269 190 L390 190" class="arrow"/>
+  <text x="330" y="179" text-anchor="middle" class="small">consultarLivros</text>
+  <path d="M390 220 L516 220" class="arrow"/>
+  <text x="453" y="209" text-anchor="middle" class="small">Obtém livro</text>
+  <path d="M516 250 L390 250" class="reply"/>
+  <text x="453" y="239" text-anchor="middle" class="small">quantidade = 0</text>
+
+  <path d="M61 310 L161 310" class="arrow"/>
+  <text x="111" y="299" text-anchor="middle" class="small">Informa nome e e-mail</text>
+  <path d="M161 340 L269 340" class="arrow"/>
+  <text x="215" y="329" text-anchor="middle" class="small">POST /interesses</text>
+  <path d="M269 370 L390 370" class="arrow"/>
+  <text x="330" y="359" text-anchor="middle" class="small">registrarInteresse</text>
+  <path d="M390 400 L516 400" class="arrow"/>
+  <text x="453" y="389" text-anchor="middle" class="small">Grava AGUARDANDO</text>
+  <path d="M390 430 L161 430" class="reply"/>
+  <text x="275" y="419" text-anchor="middle" class="small">Interesse registrado</text>
+
+  <path d="M638 490 L161 490" class="arrow"/>
+  <text x="399" y="479" text-anchor="middle" class="small">Registra chegada no frontend</text>
+  <path d="M161 520 L269 520" class="arrow"/>
+  <text x="215" y="509" text-anchor="middle" class="small">PUT /livros/{id}/estoque</text>
+  <path d="M269 550 L390 550" class="arrow"/>
+  <text x="330" y="539" text-anchor="middle" class="small">gerenciarEstoque</text>
+  <path d="M390 580 L516 580" class="arrow"/>
+  <text x="453" y="569" text-anchor="middle" class="small">Incrementa quantidade</text>
+
+  <path d="M516 610 L760 610" class="arrow"/>
+  <text x="638" y="599" text-anchor="middle" class="small">Evento de aumento</text>
+  <path d="M760 640 L390 640" class="arrow"/>
+  <text x="575" y="629" text-anchor="middle" class="small">notificarChegada</text>
+  <path d="M390 670 L516 670" class="arrow"/>
+  <text x="453" y="659" text-anchor="middle" class="small">Reserva primeiro interessado</text>
+  <path d="M390 700 L886 700" class="arrow"/>
+  <text x="638" y="689" text-anchor="middle" class="small">Publica com atributo e-mail</text>
+  <path d="M886 728 L390 728" class="reply"/>
+  <text x="638" y="717" text-anchor="middle" class="small">SNS aceitou a publicação</text>
+</svg>
