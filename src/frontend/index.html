@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sebo — Livros usados</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <span class="logo" aria-hidden="true">📚</span>
+      <div>
+        <h1>Sebo</h1>
+        <p>Livros usados com história</p>
+      </div>
+    </div>
+    <nav class="abas" role="tablist">
+      <button role="tab" class="aba ativa" data-aba="cliente" aria-selected="true">Sou cliente</button>
+      <button role="tab" class="aba" data-aba="colaborador" aria-selected="false">Colaborador</button>
+    </nav>
+  </header>
+
+  <div id="aviso" class="aviso" hidden></div>
+
+  <!-- ============================================================ CLIENTE -->
+  <main id="aba-cliente" class="painel">
+    <section class="cabecalho-secao">
+      <div>
+        <h2>Nosso acervo</h2>
+        <p class="sutil">Escolha um livro e informe seu e-mail. Se ele estiver na prateleira, avisamos na hora;
+          se não, avisamos assim que chegar.</p>
+      </div>
+      <input id="busca" type="search" placeholder="Buscar por título ou autor…" aria-label="Buscar livros">
+    </section>
+    <div id="catalogo" class="grade-livros" aria-live="polite"></div>
+  </main>
+
+  <!-- ======================================================= COLABORADOR -->
+  <main id="aba-colaborador" class="painel" hidden>
+    <section class="cartao">
+      <div class="cartao-topo">
+        <h2>Estoque</h2>
+        <button class="botao secundario" id="recarregar-estoque">Atualizar</button>
+      </div>
+      <div class="tabela-rolagem">
+        <table class="tabela">
+          <thead>
+            <tr><th>Livro</th><th>Preço</th><th class="num">Qtd.</th><th>Chegada</th><th></th></tr>
+          </thead>
+          <tbody id="tabela-estoque"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2>Venda de balcão</h2>
+      <p class="sutil">Venda somente exemplares disponíveis. Esta operação não consome reservas existentes.</p>
+      <div class="acoes">
+        <select id="venda-balcao-livro" aria-label="Livro para venda de balcão"></select>
+        <button class="botao" id="abrir-venda-balcao" type="button">Registrar venda de balcão</button>
+      </div>
+    </section>
+
+    <div class="colunas">
+      <section class="cartao">
+        <h2>Cadastrar livro</h2>
+        <form id="form-cadastro" class="formulario">
+          <label>Título <input name="titulo" required maxlength="200"></label>
+          <label>Autor <input name="autor" required maxlength="200"></label>
+          <div class="linha">
+            <label>Preço (R$) <input name="preco" type="number" min="0" step="0.01" required></label>
+            <label>Quantidade <input name="quantidade" type="number" min="0" step="1" value="0" required></label>
+          </div>
+          <label>Conservação <input name="conservacao" maxlength="60" placeholder="ex.: bom, marcas de uso"></label>
+          <button class="botao" type="submit">Cadastrar</button>
+        </form>
+      </section>
+
+      <section class="cartao">
+        <div class="cartao-topo">
+          <h2>Vendas</h2>
+          <span id="total-vendas" class="sutil"></span>
+        </div>
+        <div class="tabela-rolagem">
+          <table class="tabela">
+            <thead><tr><th>Data</th><th>Livro</th><th>Cliente</th><th class="num">Valor</th></tr></thead>
+            <tbody id="tabela-vendas"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ============================================================ DIÁLOGOS -->
+  <dialog id="dialogo-interesse">
+    <form method="dialog" id="form-interesse" class="formulario">
+      <h3>Tenho interesse</h3>
+      <p class="sutil" id="interesse-livro"></p>
+      <label>Seu nome <input name="nome" maxlength="100" autocomplete="name"></label>
+      <label>Seu e-mail <input name="email" type="email" required autocomplete="email"></label>
+      <p class="nota">Para receber o aviso, seu e-mail precisa estar inscrito nas notificações do sebo.</p>
+      <div class="acoes">
+        <button class="botao secundario" type="button" data-fechar>Cancelar</button>
+        <button class="botao" value="enviar">Enviar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dialogo-venda">
+    <form method="dialog" id="form-venda" class="formulario">
+      <h3>Registrar venda</h3>
+      <p class="sutil" id="venda-livro"></p>
+      <div class="linha">
+        <label>Valor (R$) <input name="valor" type="number" min="0" step="0.01"></label>
+        <label>Colaborador <input name="colaborador" maxlength="100"></label>
+      </div>
+      <div class="acoes">
+        <button class="botao secundario" type="button" data-fechar>Cancelar</button>
+        <button class="botao" value="enviar">Confirmar venda</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dialogo-venda-reserva">
+    <form method="dialog" class="formulario">
+      <h3>Confirmar venda da reserva</h3>
+      <p class="sutil" id="venda-reserva-livro"></p>
+      <label>Cliente <input id="venda-reserva-email" readonly></label>
+      <div class="linha">
+        <label>Valor (R$) <input name="valor" type="number" min="0" step="0.01"></label>
+        <label>Colaborador <input name="colaborador" maxlength="100"></label>
+      </div>
+      <div class="acoes">
+        <button class="botao secundario" type="button" data-fechar>Cancelar</button>
+        <button class="botao" value="enviar">Confirmar venda</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dialogo-interessados">
+    <div class="formulario">
+      <h3>Clientes interessados</h3>
+      <p class="sutil" id="interessados-livro"></p>
+      <p class="nota">Reservas podem ser canceladas manualmente pelo colaborador.</p>
+      <ul id="lista-interessados" class="lista"></ul>
+      <div class="acoes"><button class="botao secundario" type="button" data-fechar>Fechar</button></div>
+    </div>
+  </dialog>
+
+  <div id="notificacoes" class="notificacoes" aria-live="assertive"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
