@@ -41,24 +41,9 @@ O frontend chama o API Gateway HTTP, que encaminha cada rota para a Lambda corre
 
 Quando o estoque aumenta, o DynamoDB Stream envia a alteração para `sebo-notificarChegada`. Essa Lambda reserva as unidades para os primeiros interessados e publica os avisos no SNS.
 
-```mermaid
-flowchart LR
-    F[Frontend HTML/CSS/JavaScript] --> A[Amazon API Gateway]
-    A --> L1[sebo-consultarLivros]
-    A --> L2[sebo-gerenciarEstoque]
-    A --> L3[sebo-registrarInteresse]
-    A --> L4[sebo-registrarVenda]
-    A --> L5[sebo-cancelarReserva]
-    A --> L6[sebo-notificarChegada / reprocessamento]
-    L1 --> D[(DynamoDB)]
-    L2 --> D
-    L3 --> D
-    L4 --> D
-    L5 --> D
-    D -->|DynamoDB Streams| S[sebo-notificarChegada]
-    S --> N[Amazon SNS]
-    N --> E[E-mail do cliente]
-```
+<p align="center">
+  <img src="docs/arquitetura.svg" alt="Diagrama da arquitetura da solução">
+</p>
 
 As seis funções são `sebo-consultarLivros`, `sebo-gerenciarEstoque`, `sebo-registrarInteresse`, `sebo-notificarChegada`, `sebo-registrarVenda` e `sebo-cancelarReserva`.
 

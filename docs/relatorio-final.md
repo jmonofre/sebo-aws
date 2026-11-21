@@ -41,30 +41,9 @@ As tabelas usadas são:
 
 O DynamoDB Stream da tabela de livros é configurado com imagens antiga e nova. A Lambda de chegada compara as quantidades e processa o aumento. O Amazon SNS recebe o aviso publicado pela fila compartilhada e usa o atributo de mensagem `email` para selecionar uma assinatura com a política correspondente.
 
-```mermaid
-flowchart LR
-    C[Frontend estático] --> G[API Gateway HTTP API]
-    G --> CL[sebo-consultarLivros]
-    G --> GE[sebo-gerenciarEstoque]
-    G --> RI[sebo-registrarInteresse]
-    G --> NC[sebo-notificarChegada]
-    G --> RV[sebo-registrarVenda]
-    G --> CR[sebo-cancelarReserva]
-    CL --> DL[(sebo-livros)]
-    GE --> DL
-    GE --> DI[(sebo-interesses)]
-    RI --> DL
-    RI --> DI
-    RV --> DL
-    RV --> DI
-    RV --> DV[(sebo-vendas)]
-    CR --> DL
-    CR --> DI
-    DL -->|Stream NEW_AND_OLD_IMAGES| NC
-    NC --> DI
-    NC --> SNS[Amazon SNS]
-    SNS -->|aceitação da publicação| EMAIL[Entrega posterior ao e-mail]
-```
+<p align="center">
+  <img src="arquitetura.svg" alt="Diagrama da arquitetura da solução">
+</p>
 
 ## 3. Implementação e funcionamento
 

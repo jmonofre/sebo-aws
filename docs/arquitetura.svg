@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620" preserveAspectRatio="xMidYMid meet">
+  <rect width="900" height="620" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box { fill:#f7fbff; stroke:#455a64; stroke-width:2; }
+    .aws { fill:#fff4dc; stroke:#cc7a00; stroke-width:2; }
+    .db { fill:#edf7ed; stroke:#2e7d32; stroke-width:2; }
+    .lambda { fill:#f3effa; stroke:#7050a0; stroke-width:2; }
+    .title { font:700 22px Arial,sans-serif; fill:#263238; }
+    .label { font:700 14px Arial,sans-serif; fill:#263238; }
+    .small { font:13px Arial,sans-serif; fill:#37474f; }
+    .line { fill:none; stroke:#455a64; stroke-width:2; marker-end:url(#arrow); }
+  </style>
+
+  <text x="450" y="38" text-anchor="middle" class="title">Arquitetura da solução - Sebo Serverless</text>
+
+  <rect x="35" y="90" width="150" height="74" rx="8" class="box"/>
+  <text x="110" y="120" text-anchor="middle" class="label">Frontend</text>
+  <text x="110" y="142" text-anchor="middle" class="small">HTML, CSS e JavaScript</text>
+
+  <rect x="245" y="90" width="170" height="74" rx="8" class="aws"/>
+  <text x="330" y="120" text-anchor="middle" class="label">API Gateway HTTP</text>
+  <text x="330" y="142" text-anchor="middle" class="small">Rotas REST</text>
+
+  <rect x="475" y="70" width="390" height="300" rx="10" fill="#fafafa" stroke="#b0bec5" stroke-width="2"/>
+  <text x="670" y="98" text-anchor="middle" class="label">AWS Lambda</text>
+
+  <rect x="500" y="120" width="155" height="56" rx="7" class="lambda"/>
+  <text x="578" y="143" text-anchor="middle" class="small">consultarLivros</text>
+  <text x="578" y="162" text-anchor="middle" class="small">gerenciarEstoque</text>
+
+  <rect x="685" y="120" width="155" height="56" rx="7" class="lambda"/>
+  <text x="763" y="143" text-anchor="middle" class="small">registrarInteresse</text>
+  <text x="763" y="162" text-anchor="middle" class="small">registrarVenda</text>
+
+  <rect x="500" y="205" width="155" height="56" rx="7" class="lambda"/>
+  <text x="578" y="228" text-anchor="middle" class="small">cancelarReserva</text>
+  <text x="578" y="247" text-anchor="middle" class="small">notificações</text>
+
+  <rect x="685" y="205" width="155" height="56" rx="7" class="lambda"/>
+  <text x="763" y="228" text-anchor="middle" class="small">notificarChegada</text>
+  <text x="763" y="247" text-anchor="middle" class="small">reprocessamento</text>
+
+  <rect x="530" y="300" width="280" height="48" rx="7" class="aws"/>
+  <text x="670" y="329" text-anchor="middle" class="small">Fonte única compartilhada no DynamoDB</text>
+
+  <rect x="120" y="390" width="210" height="82" rx="8" class="db"/>
+  <text x="225" y="422" text-anchor="middle" class="label">sebo-livros</text>
+  <text x="225" y="444" text-anchor="middle" class="small">catálogo e quantidade</text>
+
+  <rect x="345" y="390" width="210" height="82" rx="8" class="db"/>
+  <text x="450" y="422" text-anchor="middle" class="label">sebo-interesses</text>
+  <text x="450" y="444" text-anchor="middle" class="small">fila FIFO e reservas</text>
+
+  <rect x="570" y="390" width="210" height="82" rx="8" class="db"/>
+  <text x="675" y="422" text-anchor="middle" class="label">sebo-vendas</text>
+  <text x="675" y="444" text-anchor="middle" class="small">histórico de vendas</text>
+
+  <rect x="120" y="520" width="210" height="70" rx="8" class="aws"/>
+  <text x="225" y="550" text-anchor="middle" class="label">DynamoDB Stream</text>
+  <text x="225" y="572" text-anchor="middle" class="small">NEW_AND_OLD_IMAGES</text>
+
+  <rect x="430" y="520" width="190" height="70" rx="8" class="aws"/>
+  <text x="525" y="550" text-anchor="middle" class="label">Amazon SNS</text>
+  <text x="525" y="572" text-anchor="middle" class="small">notificações por e-mail</text>
+
+  <rect x="710" y="520" width="155" height="70" rx="8" class="box"/>
+  <text x="788" y="550" text-anchor="middle" class="label">Cliente</text>
+  <text x="788" y="572" text-anchor="middle" class="small">associação confirmada</text>
+
+  <path d="M185 127 L245 127" class="line"/>
+  <path d="M415 127 L475 127" class="line"/>
+  <path d="M670 348 L225 390" class="line"/>
+  <path d="M670 348 L450 390" class="line"/>
+  <path d="M670 348 L675 390" class="line"/>
+  <path d="M225 472 L225 520" class="line"/>
+  <path d="M330 555 L430 555" class="line"/>
+  <text x="380" y="510" text-anchor="middle" class="small">evento de chegada</text>
+  <path d="M620 555 L710 555" class="line"/>
+  <text x="665" y="540" text-anchor="middle" class="small">publicação</text>
+</svg>
